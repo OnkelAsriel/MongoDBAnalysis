@@ -1,9 +1,8 @@
 import urllib2
 
 import pymongo
-from pymongo import MongoClient
 
-client = MongoClient()
+client = pymongo.MongoClient()
 
 user = ""
 password = ""
