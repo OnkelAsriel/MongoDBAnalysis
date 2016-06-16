@@ -72,7 +72,7 @@ for post in obf:
             nfavs = favourites.count(pid)
             UserRanking[user] += nuv + ndv + nfavs
             UserFavs[user] += nfavs
-            UserUpVotes[user] += nup
+            UserUpVotes[user] += nuv
             UserDownVotes[user] += ndv
         elif user in content:
             #mentions[usern] += 1
