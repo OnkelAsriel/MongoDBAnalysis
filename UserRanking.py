@@ -51,6 +51,10 @@ postlimit = 0 #no limit = 0
 
 UserRanking = Counter()
 UserPosts = Counter()
+UserFavs = Counter()
+UserUpVotes = Counter()
+UserDownVotes = Counter()
+            
 print "Number of posts: " + str(obf.count())
 for post in obf:
     if post.get("tid") in floodlist:
@@ -67,9 +71,13 @@ for post in obf:
             ndv = -downvotes.count(pid)
             nfavs = favourites.count(pid)
             UserRanking[user] += nuv + ndv + nfavs
+            UserFavs[user] += nfavs
+            UserUpVotes[user] += nup
+            UserDownVotes[user] += ndv
         elif user in content:
             #mentions[usern] += 1
             UserRanking[user] += 1
+            UserMentions[user] += +1
             
         usern += 1
     postn += 1
@@ -79,19 +87,20 @@ for post in obf:
 for i in range(0, len(userlist)):
     userlist[i].append(UserRanking[userlist[i][0]])
     userlist[i].append(UserPosts[userlist[i][0]])
-    userlist[i].append(UserRanking[userlist[i][0]]-UserPosts[userlist[i][0]])
-    if UserPosts[userlist[i][0]] > 0:
-        userlist[i].append(float(UserRanking[userlist[i][0]])/float(UserPosts[userlist[i][0]]))
-    else:
-        userlist[i].append(0)
-
+    userlist[i].append(UserFavs[userlist[i][0]])
+    userlist[i].append(UserUpVotes[userlist[i][0]])
+    userlist[i].append(UserDownVotes[userlist[i][0]])
+    userlist[i].append(UserMentions[userlist[i][0]])
+    
 userlist1 = sorted(userlist, key=lambda userlist: userlist[2], reverse=True) #sort by nentions+favs+upvotes-downvotes
 userlist2 = sorted(userlist, key=lambda userlist: userlist[3], reverse=True) #sort by posts
-userlist3 = sorted(userlist, key=lambda userlist: userlist[4], reverse=True) #sort by #1-#2
-userlist4 = sorted(userlist, key=lambda userlist: userlist[5], reverse=True) #sort by #1/#2
+userlist3 = sorted(userlist, key=lambda userlist: userlist[4], reverse=True) #sort by favs
+userlist4 = sorted(userlist, key=lambda userlist: userlist[5], reverse=True) #sort by upvotes
+userlist5 = sorted(userlist, key=lambda userlist: userlist[6], reverse=True) #sort by downvotes
+userlist6 = sorted(userlist, key=lambda userlist: userlist[7], reverse=True) #sort by mentions
 
 with open("UserRanking.pickle", "w") as sf:
-    pickle.dump([userlist1, userlist2, userlist3, userlist4], sf)
+    pickle.dump([userlist1, userlist2, userlist3, userlist4, userlist5, userlist6], sf)
 
 print "End"
 

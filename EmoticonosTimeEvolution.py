@@ -27,7 +27,7 @@ hAllPosts = TH1F("hAllPosts", "AllPosts", 7, 0, tf - t0)
 binlabels = ["Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre"]
 for emoji, ntimes in emojilist:
     if 2*ntimes >= emojilist[0][1]:
-    histos.append(TH1F("h"+emoji, emoji, 7, 0, tf - t0))
+        histos.append(TH1F("h"+emoji, emoji, 7, 0, tf - t0))
     
 print "Getting NodeBB era posts"
 obf = objects.find({"$and": [  {"relativeTime": {"$exists": False}}, {"pid": {"$exists": True}}, {"content": {"$exists": True}} ]   })
