@@ -28,17 +28,17 @@ print "Listing posts with upvotes, downvotes and favourites:"
 obuv = objects.find({"_key": {"$regex": r'uid:[0-9]+:upvote'}})
 upvotes = []
 for post in obuv:
-    upvotes.append(post.get("value"))
+    upvotes.append(int(post.get("value")))
 
 obdv = objects.find({"_key": {"$regex": r'uid:[0-9]+:downvote'}})
 downvotes = []
 for post in obdv:
-    downvotes.append(post.get("value"))
+    downvotes.append(int(post.get("value")))
 
 obfav = objects.find({"_key": {"$regex": r'uid:[0-9]+:favourite'}})
 favourites = []
 for post in obfav:
-    favourites.append(post.get("value"))
+    favourites.append(int(post.get("value")))
 
 print "Getting NodeBB era posts"
 obf = objects.find({"$and": [  {"relativeTime": {"$exists": False}}, {"pid": {"$exists": True}}, {"content": {"$exists": True}} ]   })
@@ -54,6 +54,7 @@ UserPosts = Counter()
 UserFavs = Counter()
 UserUpVotes = Counter()
 UserDownVotes = Counter()
+UserMentions = Counter()
             
 print "Number of posts: " + str(obf.count())
 for post in obf:
