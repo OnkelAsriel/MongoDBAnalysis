@@ -47,7 +47,7 @@ obf = objects.find({"$and": [  {"relativeTime": {"$exists": False}}, {"pid": {"$
 #mentions = [0]*len(userlist)
 #nposts = [0]*len(userlist)
 postn = 0
-postlimit = 10 #no limit = 0
+postlimit = 0 #no limit = 0
 
 UserRanking = Counter()
 UserPosts = Counter()
