@@ -47,7 +47,7 @@ obf = objects.find({"$and": [  {"relativeTime": {"$exists": False}}, {"pid": {"$
 #mentions = [0]*len(userlist)
 #nposts = [0]*len(userlist)
 postn = 0
-postlimit = 0 #no limit = 0
+postlimit = 10 #no limit = 0
 
 UserRanking = Counter()
 UserPosts = Counter()
@@ -65,23 +65,33 @@ for post in obf:
     pid = post.get("pid")
     usern = 0
     for user, uid in userlist:
-        if uid == author:
-            #nposts[usern] += 1
-            UserPosts[user] += 1
-            nuv = upvotes.count(pid)
-            ndv = -downvotes.count(pid)
-            nfavs = favourites.count(pid)
-            UserRanking[user] += nuv + ndv + nfavs
-            UserFavs[user] += nfavs
-            UserUpVotes[user] += nuv
-            UserDownVotes[user] += ndv
-        elif user in content:
-            #mentions[usern] += 1
-            UserRanking[user] += 1
-            UserMentions[user] += +1
+        try:
+            if uid == author:
+                #nposts[usern] += 1
+                UserPosts[user] += 1
+                nuv = upvotes.count(pid)
+                ndv = -downvotes.count(pid)
+                nfavs = favourites.count(pid)
+                UserRanking[user] += nuv + ndv + nfavs
+                UserFavs[user] += nfavs
+                UserUpVotes[user] += nuv
+                UserDownVotes[user] += ndv
+            elif user in content:
+                #mentions[usern] += 1
+                UserRanking[user] += 1
+                UserMentions[user] += +1
             
+        except TypeError:
+            print "TypeError"
+            print "uid:"
+            print uid
+            print "username:"
+            print user
+            print "content:"
+            print content
         usern += 1
     postn += 1
+
     if postlimit > 0 and postn > postlimit:
         break
 
@@ -93,7 +103,7 @@ for i in range(0, len(userlist)):
     userlist[i].append(UserDownVotes[userlist[i][0]])
     userlist[i].append(UserMentions[userlist[i][0]])
     
-userlist1 = sorted(userlist, key=lambda userlist: userlist[2], reverse=True) #sort by nentions+favs+upvotes-downvotes
+userlist1 = sorted(userlist, key=lambda userlist: userlist[2], reverse=True) #sort by mentions+favs+upvotes-downvotes
 userlist2 = sorted(userlist, key=lambda userlist: userlist[3], reverse=True) #sort by posts
 userlist3 = sorted(userlist, key=lambda userlist: userlist[4], reverse=True) #sort by favs
 userlist4 = sorted(userlist, key=lambda userlist: userlist[5], reverse=True) #sort by upvotes
