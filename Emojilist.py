@@ -1,4 +1,5 @@
 emojilist_short = [
+[":roto2pun:"],
 [":abrazo:"],
 [":ahsisi:"],
 [":aidiomio:"],
@@ -129,6 +130,7 @@ emojilist_short = [
 ]
 
 emojilist_long = [
+[":roto2pun:"],
 [":abrazo:"], 
 [":elrisas:"], 
 [":esdios:"], 
