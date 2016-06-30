@@ -1,4 +1,5 @@
 emojilist_short = [
+[":thisis:"],
 [":roto2pun:"],
 [":abrazo:"],
 [":ahsisi:"],
