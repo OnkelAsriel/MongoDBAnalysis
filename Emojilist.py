@@ -131,6 +131,7 @@ emojilist_short = [
 ]
 
 emojilist_long = [
+[":thisis:"],
 [":roto2pun:"],
 [":abrazo:"], 
 [":elrisas:"], 
